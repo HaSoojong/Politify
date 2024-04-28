@@ -3,27 +3,18 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from pytrends.request import TrendReq
 import pandas as pd 
+from urllib.parse import quote_plus
+from models import Trend, Base
+
 
 # Database connection setup
-SQLALCHEMY_DATABASE_URL = 'postgresql://postgres:!Q@W#E$R1q2w3e4r@localhost:5432/Politify'
+SQLALCHEMY_DATABASE_URL = 'postgresql://postgres:%s@localhost:5432/postgres' % quote_plus("!Q@W#E$R1q2w3e4r")
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
-# Model definition
-class Trend(Base):
-    __tablename__ = 'trends'
-    
-    id = Column(Integer, primary_key=True, index=True)
-    keyword = Column(String, index=True)
-    top1 = Column(Text)
-    top2 = Column(Text)
-    top3 = Column(Text)
-    top4 = Column(Text)
-    top5 = Column(Text)
-
 # Create the database table
-#Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
 
 # Dependency for database session
 def get_db():
@@ -57,8 +48,7 @@ def store_in_database(keyword, df, db):
     db.commit()
 
 # Main execution
-if __name__ == "__main__":
-    keyword = "Deftones"
+def makeTable(keyword):
     db = next(get_db())  # Get a database session
     df = fetch_google_trends(keyword)
     store_in_database(keyword, df, db)
