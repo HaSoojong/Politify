@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 
+# Democratic
 stateWeight = {
     "Massachusetts" : .5230,
     "Arizona" : .4211,
@@ -46,5 +47,9 @@ stateWeight = {
     }
 
 
-def stateWeights():
-    return stateWeight
+
+def finalWeights(stateDict):
+    new_d
+
+    for x in stateDict:
+        x *= 

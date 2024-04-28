@@ -88,6 +88,8 @@ def callback():
         #store_in_database(keyword, df, get_db())
         state_data = pd.concat([state_data, df], axis=1)
     
+
+    #get the weight of each state(for all 50 states)
     #get the 5 indexes with the highest values in each column and store them in a new dataframe
     state_data = state_data.apply(lambda x: x.nlargest(5).index)
     #get a list of the 1st row of the dataframe
@@ -95,6 +97,7 @@ def callback():
     print(state_data)
 
 
+    
     # Display the data
     return display_data(state_data)
     #return jsonify(artist_data)
@@ -106,11 +109,6 @@ def display_data(state_data):
     #create a front end page that will display the data
     return render_template('index.html', data=state_data)
     
-
-    
-
-
-
 
 
 def fetch_Artists(access_token):
