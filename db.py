@@ -23,7 +23,7 @@ class Trend(Base):
     top5 = Column(Text)
 
 # Create the database table
-Base.metadata.create_all(bind=engine)
+#Base.metadata.create_all(bind=engine)
 
 # Dependency for database session
 def get_db():
@@ -35,7 +35,7 @@ def get_db():
 
 def fetch_google_trends(keyword):
     pytrend = TrendReq()
-    pytrend.build_payload(kw_list=[keyword], geo='US')
+    pytrend.build_payload(kw_list=[keyword], geo='US', timeframe='today 12-m')
     df = pytrend.interest_by_region(resolution='REGION', inc_low_vol=True, inc_geo_code=False)
     return df
 
